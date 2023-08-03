@@ -10,7 +10,7 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setMessage(data.x);
+        setMessage(data.message);
       });
   }, []);
 
