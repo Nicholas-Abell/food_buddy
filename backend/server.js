@@ -19,7 +19,9 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log("server runnin on port: " + port);
   mongoose
-    .connect(process.env.MONGODB_CREDENTIALS)
+    .connect(
+
+    )
     .then(() => {
       console.log("Mongoose Connected");
     })
