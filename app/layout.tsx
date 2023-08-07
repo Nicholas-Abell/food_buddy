@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="flex justify-center items-center w-screen h-screen">
         <Navbar />
         {children}
       </body>
