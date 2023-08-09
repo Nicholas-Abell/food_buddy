@@ -3,13 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 type FormProps = {
-  username: string;
-  setUsername: (e: string) => void;
-  password: string;
-  setPassword: (e: string) => void;
   label: string;
-  isLoading: boolean;
-  setIsLoading: (arg: boolean) => void;
 };
 
 const Form: React.FC<FormProps> = ({ label }) => {

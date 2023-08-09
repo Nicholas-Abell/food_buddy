@@ -5,17 +5,20 @@ import Form from "./Form";
 type pageProps = {};
 
 const Auth: React.FC<pageProps> = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
   return (
-    <div>
-      <Form
+    <div className="flex justify-center items-center gap-8">
+      {/* <Form
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
-        label="Register"
+        label="Login"
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      /> */}
+      <Form
+        label="register"
       />
     </div>
   );
