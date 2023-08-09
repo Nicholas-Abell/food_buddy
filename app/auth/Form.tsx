@@ -12,6 +12,7 @@ const Form: React.FC<FormProps> = ({ label }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [cookies, setCookies] = useCookies(["access_token"]);
 
   const router = useRouter();
@@ -20,11 +21,17 @@ const Form: React.FC<FormProps> = ({ label }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post("http://localhost:5000/auth/register", {
+      const response = await axios.post("http://localhost:5000/auth/register", {
         username,
         password,
       });
-      alert("Registration Completed!");
+      console.log(response);
+      setMessage(response.data.message);
+      if (response.data.message === "User Registered Successfully") {
+        Login(e);
+      } else {
+        throw new Error("User already exists");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -42,9 +49,14 @@ const Form: React.FC<FormProps> = ({ label }) => {
       });
 
       console.log(response.data);
-      setCookies("access_token", response.data.token);
-      window.localStorage.setItem("userID", response.data.token);
-      router.push("/");
+
+      if (response.data.token) {
+        setCookies("access_token", response.data.token);
+        window.localStorage.setItem("userID", response.data.token);
+        router.push("/");
+      } else {
+        throw new Error("User Name or Password is incorrect");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -85,7 +97,9 @@ const Form: React.FC<FormProps> = ({ label }) => {
           Submit
         </button>
       </form>
-      <div>{isLoading && <p className="text-red-600">Loading</p>}</div>
+      <div>
+        {isLoading ? <p className="text-red-600">Loading</p> : <p>{message}</p>}
+      </div>
     </div>
   );
 };
