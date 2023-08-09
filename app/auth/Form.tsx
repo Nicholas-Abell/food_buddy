@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 
 type FormProps = {
   label: string;
@@ -10,16 +12,39 @@ const Form: React.FC<FormProps> = ({ label }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [cookies, setCookies] = useCookies(["access_token"]);
 
-  const onSubmit = async (e: any) => {
-    setIsLoading(true);
+  const router = useRouter();
+
+  const Register = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await axios.post("http://localhost:5000/auth/register", {
         username,
         password,
       });
       alert("Registration Completed!");
+    } catch (error) {
+      console.error(error);
+    }
+    setIsLoading(false);
+  };
+
+  const Login = async (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post("http://localhost:5000/auth/login", {
+        username,
+        password,
+      });
+
+      console.log(response.data);
+      setCookies("access_token", response.data.token);
+      window.localStorage.setItem("userID", response.data.token);
+      router.push("/");
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +60,6 @@ const Form: React.FC<FormProps> = ({ label }) => {
             <label htmlFor="username">Username:</label>
             <input
               type="text"
-              id="username"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -43,10 +67,9 @@ const Form: React.FC<FormProps> = ({ label }) => {
             ></input>
           </div>
           <div className="flex justify-end gap-2">
-            <label htmlFor="password">Passoword:</label>
+            <label htmlFor="password">Password:</label>
             <input
               type="password"
-              id="password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -55,7 +78,7 @@ const Form: React.FC<FormProps> = ({ label }) => {
           </div>
         </div>
         <button
-          onClick={onSubmit}
+          onClick={label === "register" ? Register : Login}
           className="bg-white p-2 rounded-lg hover:bg-gray-400"
           type="submit"
         >
