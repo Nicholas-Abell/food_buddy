@@ -34,14 +34,17 @@ const Navbar: React.FC<NavbarProps> = () => {
             Create Recipe
           </Link>
         </li>
-        <li>
-          <Link className="hover:text-gray-200" href="/auth">
-            Your Profile
-          </Link>
-        </li>
-        <li>
-          <button onClick={logout}>LOGOUT</button>
-        </li>
+        {window.localStorage.getItem("userID") ? (
+          <li>
+            <button onClick={logout}>LOGOUT</button>
+          </li>
+        ) : (
+          <li>
+            <Link className="hover:text-gray-200" href="/auth">
+              Your Profile
+            </Link>
+          </li>
+        )}
       </ul>
     </div>
   );
