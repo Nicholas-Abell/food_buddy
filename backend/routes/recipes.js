@@ -27,9 +27,9 @@ router.put("/", async (req, res) => {
   try {
     const recipe = await RecipeModel.findById(req.body.recipeID);
     const user = await UserModel.findById(req.body.userID);
-    user.saveRecipes.push(recipe);
+    user.savedRecipes.push(recipe);
     await user.save();
-    res.json({ saveRecipes: user.saveRecipes });
+    res.json({ saveRecipes: user.savedRecipes });
   } catch (error) {
     res.json(error);
   }
