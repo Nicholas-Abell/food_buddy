@@ -1,16 +1,22 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios";
+import { useGetUserId } from "../hooks/useGetUserID";
+import { useRouter } from "next/navigation";
 
 type pageProps = {};
 
 const CreateRecipe: React.FC<pageProps> = () => {
+  const userId = useGetUserId();
+  const router = useRouter();
+
   const [recipe, setRecipe] = useState({
     name: "",
     ingredients: [""],
     instructions: "",
     imageUrl: "",
     cookingTime: 0,
-    userOwner: 0,
+    userOwner: userId,
   });
 
   const handleChange = (e: any) => {
@@ -27,6 +33,17 @@ const CreateRecipe: React.FC<pageProps> = () => {
     const ingredients = recipe.ingredients;
     ingredients[key] = value;
     setRecipe({ ...recipe, ingredients });
+  };
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/recipes", recipe);
+      console.log("recipe created", recipe);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -81,6 +98,7 @@ const CreateRecipe: React.FC<pageProps> = () => {
             onChange={handleChange}
           />
         </div>
+        <button>Create Recipe</button>
       </form>
     </div>
   );
