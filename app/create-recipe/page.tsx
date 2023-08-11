@@ -48,16 +48,25 @@ const CreateRecipe: React.FC<pageProps> = () => {
 
   return (
     <div>
-      <form className="flex flex-col justify-end items-center gap-4 border-green-400 border-2 w-[50vw]">
-        <div className="flex gap-4 justify-center items-center">
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" onChange={handleChange} />
-        </div>
+      <form className="flex flex-col justify-end items-center w-[50vw] gap-2">
+        <label
+          htmlFor="name"
+          className="text-gray-100 font-bold text-3xl uppercase"
+        >
+          Name
+        </label>
+        <input type="text" id="name" name="name" onChange={handleChange} />
 
-        <div className="flex flex-col gap-4 justify-center items-center">
-          <label htmlFor="ingredients">Ingredients</label>
+        <label
+          htmlFor="ingredients"
+          className="text-gray-100 font-bold text-3xl uppercase"
+        >
+          Ingredients
+        </label>
+        <div className="border-2 border-green-400 flex flex-wrap gap-2 max-h-[240px] overflow-scroll">
           {recipe.ingredients.map((ingredient, key) => (
             <input
+              className="flex-1"
               key={key}
               type="text"
               name="ingredients"
@@ -65,40 +74,56 @@ const CreateRecipe: React.FC<pageProps> = () => {
               onChange={(e) => handleIngredientChange(e, key)}
             ></input>
           ))}
-          <button type="button" onClick={addIngredient}>
-            Add Ingredient
-          </button>
         </div>
+        <button
+          type="button"
+          onClick={addIngredient}
+          className="bg-red-700 h-[30px] w-[30px] rounded-md text-gray-100 font-bold uppercase hover:bg-red-900"
+        >
+          +
+        </button>
 
-        <div className="flex gap-4 justify-center items-center">
-          <label htmlFor="instructions">Instructions</label>
-          <textarea
-            id="instructions"
-            name="instructions"
-            onChange={handleChange}
-          ></textarea>
-        </div>
+        <label
+          htmlFor="instructions"
+          className="text-gray-100 font-bold text-3xl uppercase"
+        >
+          Instructions
+        </label>
+        <textarea
+          className="w-full p-2"
+          id="instructions"
+          name="instructions"
+          onChange={handleChange}
+        ></textarea>
 
-        <div className="flex gap-4 justify-center items-center">
-          <label htmlFor="imageUrl">Image Url</label>
-          <input
-            type="text"
-            id="imageUrl"
-            name="imageUrl"
-            onChange={handleChange}
-          ></input>
-        </div>
+        <label
+          htmlFor="imageUrl"
+          className="text-gray-100 font-bold text-3xl uppercase"
+        >
+          Image Url
+        </label>
+        <input
+          type="text"
+          id="imageUrl"
+          name="imageUrl"
+          onChange={handleChange}
+        ></input>
 
-        <div className="flex gap-4 justify-end items-center">
-          <label htmlFor="cookingTime">{"Cooking Time (minutes)"}</label>
-          <input
-            type="number"
-            id="cookingTime"
-            name="cookingTime"
-            onChange={handleChange}
-          />
-        </div>
-        <button>Create Recipe</button>
+        <label
+          htmlFor="cookingTime"
+          className="text-gray-100 font-bold text-3xl uppercase"
+        >
+          {"Cooking Time (minutes)"}
+        </label>
+        <input
+          type="number"
+          id="cookingTime"
+          name="cookingTime"
+          onChange={handleChange}
+        />
+        <button className="bg-red-700 p-4 rounded-md text-gray-100 font-bold uppercase hover:bg-red-900">
+          Create Recipe
+        </button>
       </form>
     </div>
   );
