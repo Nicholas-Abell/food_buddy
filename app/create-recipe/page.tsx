@@ -40,7 +40,7 @@ const CreateRecipe: React.FC<pageProps> = () => {
     try {
       await axios.post("http://localhost:5000/recipes", recipe);
       console.log("recipe created", recipe);
-      router.push("/");
+      //   router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -121,7 +121,10 @@ const CreateRecipe: React.FC<pageProps> = () => {
           name="cookingTime"
           onChange={handleChange}
         />
-        <button className="bg-red-700 p-4 rounded-md text-gray-100 font-bold uppercase hover:bg-red-900">
+        <button
+          onClick={onSubmit}
+          className="bg-red-700 p-4 rounded-md text-gray-100 font-bold uppercase hover:bg-red-900"
+        >
           Create Recipe
         </button>
       </form>
