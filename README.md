@@ -8,3 +8,4 @@ share grocery list with family
 
 Front End: Next JS
 Backend: MongoDB, Express JS
+...
